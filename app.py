@@ -1,10 +1,14 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
+from calculadora import calcular
 
 app = Flask(__name__)
 
-@app.route('/')
-def texto_explicativo():
-    return render_template("home.html") 
+@app.route("/", methods=["GET", "POST"])
+def index():
+    if request.method == "POST":
+        return calcular()
+    # Em GET, exibe o formulário vazio
+    return render_template("calculadora.html", etapas="", resultados="")
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     app.run(debug=True)
